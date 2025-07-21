@@ -9,34 +9,33 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var counterLabel: UILabel!
-    @IBOutlet weak var plusButton: UIButton!
-    @IBOutlet weak var minusButton: UIButton!
-    @IBOutlet weak var resetButton: UIButton!
-    @IBOutlet weak var historyTextView: UITextView!
-    let dateFormatter: DateFormatter = {
+    @IBOutlet weak private var counterLabel: UILabel!
+    @IBOutlet weak private var plusButton: UIButton!
+    @IBOutlet weak private var minusButton: UIButton!
+    @IBOutlet weak private var resetButton: UIButton!
+    @IBOutlet weak private var historyTextView: UITextView!
+    private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-    formatter.locale = Locale(identifier: "ru_RU")
-    formatter.dateFormat = "dd.MM.yyyy HH:mm"
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.dateFormat = "dd.MM.yyyy HH:mm"
+        
+        return formatter
+    }()
     
-    return formatter
-}()
-   
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         counterLabel.text = "0"
-        historyTextView.text = "История изменений".uppercased()
+        historyTextView.text = "История изменений:\n".uppercased()
         historyTextView.isEditable = false
         historyTextView.isScrollEnabled = true
-    
+        
         historyTextView.layer.borderColor = UIColor.blue.cgColor
         historyTextView.layer.borderWidth = 1.0
     }
     
     
-    @IBAction func plusButtonTapped(_ sender: Any) {
+    @IBAction private func plusButtonTapped(_ sender: Any) {
         let currentText = counterLabel.text ?? "0"
         var currentValue = Int(currentText) ?? 0
         
@@ -46,8 +45,8 @@ class ViewController: UIViewController {
         historyTextView.text += "\n\(dateFormatter.string(from: Date())): значение изменено на +1"
     }
     
-
-    @IBAction func minusButtonTapped(_ sender: Any) {
+    
+    @IBAction private func minusButtonTapped(_ sender: Any) {
         let currentText = counterLabel.text ?? "0"
         var currentValue = Int(currentText) ?? 0
         
@@ -60,14 +59,14 @@ class ViewController: UIViewController {
         }
         
         counterLabel.text = "\(currentValue)"
-       
+        
         
         
         
         
     }
     
-    @IBAction func resetButtonTapped(_ sender: Any) {
+    @IBAction private func resetButtonTapped(_ sender: Any) {
         counterLabel.text = "0"
         historyTextView.text += "\n\(dateFormatter.string(from: Date())): значение сброшено"
     }
